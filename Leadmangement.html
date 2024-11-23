@@ -14,42 +14,15 @@
             overflow: hidden;
         }
 
-        /* Background Container */
+        /* Gradient Background */
         .background-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            background: linear-gradient(to right, #9fc5e8, #33AEFF); /* Gradient color */
             z-index: -1;
-        }
-
-        .background-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-
-        .background-container img.active {
-            opacity: 1;
-        }
-
-        /* Blur Effect */
-        .background-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
-            backdrop-filter: blur(8px);
         }
 
         /* Login Container */
@@ -138,11 +111,10 @@
             margin-top: 20px;
         }
 
-        /* Error Message */
-        #error-message {
+        /* Error message */
+        .error-message {
             color: red;
-            text-align: center;
-            display: none;
+            margin-top: 10px;
         }
 
         /* Responsive Design */
@@ -159,17 +131,14 @@
     </style>
 </head>
 <body>
-    <!-- Background Images -->
-    <div class="background-container">
-        <img src="https://www.pexels.com/video/wind-blows-through-leaves-of-the-tree-in-autumn-3105317/" alt="Background 1" class="active">
-        <img src="https://www.pexels.com/photo/dusk-panoramic-aerial-view-of-monaco-28193003/" alt="Background 2">
-        <img src="https://www.pexels.com/photo/scenic-coastal-landscape-with-mountains-and-sea-29014372/" alt="Background 3">
-    </div>
+    <!-- Background Gradient -->
+    <div class="background-container"></div>
 
     <!-- Login Form -->
     <div class="login-container">
         <div class="login-box">
             <div class="logo">
+                <!-- Replace 'logo.png' with your logo file -->
                 <img src="logo.png" alt="Finamite Logo">
             </div>
             <h2>Login to your account</h2>
@@ -185,8 +154,8 @@
                     <label for="remember">Remember me</label>
                 </div>
                 <button type="submit" class="login-btn">Login</button>
-                <p id="error-message">Invalid username or password.</p>
             </form>
+            <p id="error-message" class="error-message"></p> <!-- Error message will show here -->
             <footer>
                 <p>2024 © Finamite - CRM Software.</p>
             </footer>
@@ -194,38 +163,24 @@
     </div>
 
     <script>
-        // JavaScript to cycle through background images
-        const images = document.querySelectorAll('.background-container img');
-        let currentIndex = 0;
-
-        function changeBackground() {
-            images[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.add('active');
-        }
-
-        // Change background every 5 seconds
-        setInterval(changeBackground, 5000);
-
-        // Login Functionality
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent form submission
-
+            
             // Define your login credentials
             const username = "Finamite123"; // Replace with your username
             const password = "12345678"; // Replace with your password
-
+            
             // Get input values
             const inputUsername = document.getElementById("username").value;
             const inputPassword = document.getElementById("password").value;
-
+            
             // Validate credentials
             if (inputUsername === username && inputPassword === password) {
-                // Redirect to Looker Studio report
-                window.location.href = "https://script.google.com/macros/s/AKfycbzZb4FubtQoUxWOVEdKI9lgzEgqLruYNz1lFduCQiMPnwZIz-XpdvJP6FaQYDdODKQd9g/exec"; // Replace with your Looker Studio link
+                // Redirect to the desired page after successful login
+                window.location.href = "https://script.google.com/macros/s/AKfycbzZb4FubtQoUxWOVEdKI9lgzEgqLruYNz1lFduCQiMPnwZIz-XpdvJP6FaQYDdODKQd9g/exec"; // Replace with your page URL
             } else {
                 // Show error message
-                document.getElementById("error-message").style.display = "block";
+                document.getElementById("error-message").innerText = "Invalid username or password.";
             }
         });
     </script>
