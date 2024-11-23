@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Finamite</title>
+    <style>
+        /* Reset and Basic Styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Background Container */
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .background-container img.active {
+            opacity: 1;
+        }
+
+        /* Blur Effect */
+        .background-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
+            backdrop-filter: blur(8px);
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Login Box */
+        .login-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Logo */
+        .logo img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        /* Heading */
+        h2 {
+            margin: 10px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        /* Input Fields */
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Remember Me */
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .remember-me input {
+            margin-right: 5px;
+        }
+
+        /* Button */
+        .login-btn {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Footer */
+        footer p {
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        /* Error Message */
+        #error-message {
+            color: red;
+            text-align: center;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .login-box {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .logo img {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Images -->
+    <div class="background-container">
+        <img src="https://www.pexels.com/video/wind-blows-through-leaves-of-the-tree-in-autumn-3105317/" alt="Background 1" class="active">
+        <img src="https://www.pexels.com/photo/dusk-panoramic-aerial-view-of-monaco-28193003/" alt="Background 2">
+        <img src="https://www.pexels.com/photo/scenic-coastal-landscape-with-mountains-and-sea-29014372/" alt="Background 3">
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <img src="logo.png" alt="Finamite Logo">
+            </div>
+            <h2>Login to your account</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <p id="error-message">Invalid username or password.</p>
+            </form>
+            <footer>
+                <p>2024 © Finamite - CRM Software.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to cycle through background images
+        const images = document.querySelectorAll('.background-container img');
+        let currentIndex = 0;
+
+        function changeBackground() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+
+        // Change background every 5 seconds
+        setInterval(changeBackground, 5000);
+
+        // Login Functionality
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Define your login credentials
+            const username = "Finamite123"; // Replace with your username
+            const password = "12345678"; // Replace with your password
+
+            // Get input values
+            const inputUsername = document.getElementById("username").value;
+            const inputPassword = document.getElementById("password").value;
+
+            // Validate credentials
+            if (inputUsername === username && inputPassword === password) {
+                // Redirect to Looker Studio report
+                window.location.href = "https://lookerstudio.google.com/reporting/47652f58-a06c-43a1-a5b8-30b0331c6e00"; // Replace with your Looker Studio link
+            } else {
+                // Show error message
+                document.getElementById("error-message").style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
